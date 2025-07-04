@@ -7,8 +7,7 @@ A web-based voting platform built with **Flask** that supports **Ranked Choice V
 
 ## 🚀 Live Demo
 
-🟢 **Live App**: [https://your-render-link.onrender.com](https://your-render-link.onrender.com)  
-_(Replace with your actual deployed URL once deployed)_
+🟢 **Live App**: [https://voting-app-1kg5.onrender.com/login](https://github.com/chaitanya-mutyala/voting-app.git)  
 
 ---
 
@@ -65,7 +64,7 @@ _(Replace with your actual deployed URL once deployed)_
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/rcv-voting-app.git
+git clone https://github.com/chaitanya-mutyala/voting-app.git
 cd rcv-voting-app
 ```
 

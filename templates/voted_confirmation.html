@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Thank You{% endblock %}
+{% block content %}
+  <h2>Thank you for voting, {{ session.username }}!</h2>
+  <p>Your ranking:</p>
+  <ol>
+    {% for cand in user_vote %}
+      <li>{{ cand }}</li>
+    {% endfor %}
+  </ol>
+
+  <!-- Timer until results -->
+  <p id="countdown"></p>
+  <script>
+    const endTime = new Date("{{ end_time }}").getTime();
+    const countdown = document.getElementById('countdown');
+
+    const x = setInterval(function () {
+      const now = new Date().getTime();
+      const distance = endTime - now;
+
+      if (distance <= 0) {
+        clearInterval(x);
+        countdown.innerHTML = "Voting ended.";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML =
+        "Results in: " +
+        (days > 0 ? days + "d " : "") +
+        hours + "h " + minutes + "m " + seconds + "s ";
+    }, 1000);
+  </script>
+{% endblock %}

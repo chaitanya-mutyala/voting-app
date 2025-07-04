@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Results{% endblock %}
+{% block content %}
+  <h2>Election Results</h2>
+  {% if winner %}
+    <p><strong>Winner:</strong> {{ winner }}</p>
+  {% else %}
+    <p>No candidate achieved a majority (tie or no ballots).</p>
+  {% endif %}
+  <h3>All Ballots Cast</h3>
+  <ul>
+    {% for b in ballots %}
+      <li>{{ b|join(" → ") }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Vote{% endblock %}
+
+{% block content %}
+  <h2>Cast Your Vote</h2>
+  <p>Election ends in <span id="countdown"></span>.</p>
+  <p>Rank the candidates from your most preferred (1st) to least preferred.</p>
+
+  <form method="POST">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        {% if category == 'error' %}
+          <p class="error">{{ msg }}</p>
+        {% endif %}
+      {% endfor %}
+    {% endwith %}
+
+    {% for i in range(1, 6) %}
+      <label for="pref{{i}}">
+        {{ i }}{% if i == 1 %} (required){% endif %} Preference:
+      </label>
+      <select id="pref{{i}}" name="pref{{i}}">
+        <option value="">—</option>
+        {% for c in candidates %}
+          <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </select>
+    {% endfor %}
+
+    <button type="submit">Submit Vote</button>
+  </form>
+
+  <script>
+    // parse the ISO timestamp passed from Flask
+    const endTime = new Date("{{ end_time }}").getTime();
+    const resultURL = "{{ url_for('results') }}";
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const diff = endTime - now;
+      if (diff <= 0) {
+        window.location.href = resultURL;
+        return;
+      }
+      const days    = Math.floor(diff / (1000*60*60*24));
+      const hours   = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const seconds = Math.floor((diff % (1000*60)) / 1000);
+      document.getElementById('countdown').textContent =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
+{% endblock %}
